@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "celo2-optax"
+version = "0.1.0"
+description = "Optax implementation of Celo2"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Abhinav Moudgil"},
+]
+dependencies = [
+    "jax",
+    "flax",
+    "dm-haiku",
+    "optax",
+    "numpy",
+]
+
+[project.urls]
+Paper = "https://arxiv.org/abs/2602.19142"
+
+[tool.setuptools]
+py-modules = ["celo2_optax"]
