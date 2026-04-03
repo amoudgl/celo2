@@ -17,13 +17,12 @@ or simply copy `celo2_optax.py` into your project and go.
 
 ## Download
 
-Pretrained optimizer weights are available on HuggingFace:
+Pretrained optimizer weights are available on HuggingFace and can be downloaded via commands below with [CLI](https://huggingface.co/docs/huggingface_hub/en/guides/cli) tool:
 
 | Optimizer | HuggingFace | Download command
 | -------- | ------- | ------- |
-| celo2 | [repo](https://huggingface.co/amoudgl/celo2) | `huggingface-cli download amoudgl/celo2 --local-dir ./celo2`
-| celo2-base | [repo](https://huggingface.co/amoudgl/celo2-base) | `huggingface-cli download amoudgl/celo2-base --local-dir ./celo2-base`
-
+| celo2 | [repo](https://huggingface.co/amoudgl/celo2) | `hf download amoudgl/celo2 --local-dir ./celo2`
+| celo2-base | [repo](https://huggingface.co/amoudgl/celo2-base) | `hf download amoudgl/celo2-base --local-dir ./celo2-base`
 
 **Celo2 vs Celo2-base.** Celo2 applies Newton-Schulz orthogonalization on top of the learned MLP update rule for matrix (2D) parameters from hidden layers and uses AdamW for biases/embedding parameters. Celo2-base uses the learned update rule for all parameters. Both have been meta-trained on 4 simple image MLP classification tasks from [Celo](https://arxiv.org/abs/2501.12670) but work out-of-the-box stably on unseen tasks in our experiments. We recommend Celo2 for practical use and better performance. See the [paper](https://arxiv.org/abs/2602.19142) for details.
 
