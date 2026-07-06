@@ -109,6 +109,9 @@ Meta-training should finish in <6h for both variants on a single A100 GPU.
 
 `--exp_name` is the run name used in Weights & Biases when logging is enabled; `--exp_id` is the subdirectory name under `<experiment_root>/train/` where checkpoints, config, and metrics are written (if unset, an id is auto-generated). For more on training flags, see the [training script](https://github.com/amoudgl/celo/blob/main/celo/train.py) in the [celo](https://github.com/amoudgl/celo) repository.
 
+## Sharp edges
+- The implementation uses last two dimensions of matrix parameters by default for orthogonalization and RMS normalization (look [here](https://github.com/amoudgl/celo2/blob/main/celo2_optax.py#L461) and [here](https://github.com/amoudgl/celo2/blob/main/celo2_optax.py#L64-L81)): if a parameter has more than two dimensions, the implementation treats the last two as the matrix to operate on and the leading dimensions are batched (parallelized) over. If your evaluation task's network doesn't have this structure by default, i.e. parameter dimensions that should be orthogonalized/normalized are not the last two, you'll need to either adapt the task network implementation or modify the Celo2 forward pass.
+- We use the LM-30M task (see [paper](https://arxiv.org/abs/2602.19142) for details of this task) as the validation task: we evaluate final optimizer checkpoint from each meta-training sweep run and pick the one that performs the best on the LM-30M task. We do this because of the large gap between meta-training (image classification with small MLPs) and evaluation tasks (million/billion-scale language modeling with transformers) which leads to generalization issue -- the optimizer checkpoint with lowest meta-training loss may not always perform the best on downstream evaluation tasks, and we found that LM-30M works well as a proxy.
 
 ## Citation
 
